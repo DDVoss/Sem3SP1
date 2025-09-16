@@ -18,7 +18,7 @@ public class Main {
         /*
         List<MovieDTO> allMovies = movieService.getLatestDanishMovie();
         System.out.println("Fetched: " + allMovies.size());
-        allMovies.forEach(m -> System.out.println(m.getCurrentData().getOriginalTitle()));
+        allMovies.forEach(m -> System.out.println(m.getOriginalTitle()));
 
          */
 

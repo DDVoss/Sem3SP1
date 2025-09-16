@@ -17,41 +17,25 @@ import java.util.List;
 public class MovieDTO {
     private int id;
 
-    @JsonProperty("imdb_id")
-    private String imdbId;
+    private String title;
 
-    @JsonUnwrapped   // 👈 tells Jackson to map root fields into this object
-    private CurrentData currentData;
+    @JsonProperty("original_title")
+    private String originalTitle;
 
-    @Data
-    @NoArgsConstructor
-    @AllArgsConstructor
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    public static class CurrentData {
-        private boolean adult;
-        private List<GenreDTO> genres;
-        private String homepage;
+    @JsonProperty("origin_country")
+    private List<String> originCountry;
 
-        @JsonProperty("origin_country")
-        private List<String> originCountry;
+    @JsonProperty("original_language")
+    private String originalLanguage;
 
-        @JsonProperty("original_language")
-        private String originalLanguage;
+    private double popularity;
 
-        @JsonProperty("original_title")
-        private String originalTitle;
+    @JsonProperty("release_date")
+    private String releaseDate;
 
-        private String overview;
-        private double popularity;
+    private List<GenreDTO> genres;
+    private int runtime;
 
-        @JsonProperty("release_date")
-        private String releaseDate;
 
-        private int revenue;
-        private int runtime;
-        private String status;
-        private String tagline;
-        private String title;
-    }
 }
 
