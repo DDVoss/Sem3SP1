@@ -7,9 +7,12 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.ArrayList;
 import java.util.List;
 
 public class FetchTools {
+
+    ObjectMapper objectMapper = new ObjectMapper();
 
     /*
     public static ActivityDTO buildActivity(
@@ -50,7 +53,6 @@ public class FetchTools {
      */
 
     public <T> T getFromApi(String uri, Class<T> dtoClass)  {
-        ObjectMapper objectMapper = new ObjectMapper();
 
         try {
             HttpClient client = HttpClient.newHttpClient();
@@ -77,32 +79,51 @@ public class FetchTools {
     }
 
     public <T> List<T> getFromApiList(String uri, Class<T> dtoClass)  {
-        ObjectMapper objectMapper = new ObjectMapper();
+        List<T> allResults = new ArrayList<>();
+
 
         try {
             HttpClient client = HttpClient.newHttpClient();
 
-            HttpRequest request = HttpRequest
-                    .newBuilder()
-                    .header("accept", "application/json")
-                    .uri(new URI(uri))
-                    .GET()
-                    .build();
+            int page = 1;
+            int totalPages;
+            
+            do {
+                String urlWithPage = uri + "&page=" + page;
 
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+                HttpRequest request = HttpRequest
+                        .newBuilder()
+                        .header("accept", "application/json")
+                        .uri(new URI(urlWithPage))
+                        .GET()
+                        .build();
 
-            if (response.statusCode() == 200)   {
-                String json = response.body();
-                SearchResultDTO<T> searchResult = objectMapper.readValue(json, objectMapper.getTypeFactory().constructParametricType(SearchResultDTO.class, dtoClass));
-                return searchResult.getResults();
-            } else {
-                System.out.println("GET request failed. Status code: " + response.statusCode());
-            }
+                HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+                if (response.statusCode() == 200) {
+                    String json = response.body();
+                    SearchResultDTO<T> searchResult = objectMapper.readValue(
+                            json,
+                            objectMapper.getTypeFactory()
+                                    .constructParametricType(SearchResultDTO.class, dtoClass));
+
+                    allResults.addAll(searchResult.getResults());
+
+                    totalPages = searchResult.getTotal_pages();
+                    page++;
+
+                } else {
+                    System.out.println("GET request failed. Status code: " + response.statusCode());
+                    break;
+                }
+            } while (page <= totalPages);
 
         } catch (Exception e){
             e.printStackTrace();
         }
-        return List.of();
+        return allResults;
     }
+
+
 
 }
