@@ -1,7 +1,9 @@
-package app.dto;
+package app.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,34 +11,37 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonIgnoreProperties(ignoreUnknown = true)
 
-public class CastDTO {
+public class Cast {
 
+    @Id
+    @Column(name = "cast_id")
     private int id;
+
     private boolean adult;
     private int gender;
 
-    @JsonProperty("known_for_department")
+    @Column(name = "known_for_department")
     private String knownForDepartment;
 
     private String name;
 
-    @JsonProperty("original_name")
+    @Column(name = "original_name")
     private String originalName;
 
     private double popularity;
 
-    @JsonProperty("profile_path")
+    @Column(name = "profile_path")
     private String profilePath;
 
-    @JsonProperty("cast_id")
+    @Column(name = "cast_id")
     private int castId;
 
     private String character;
 
-    @JsonProperty("credit_id")
-    private String creditId;
 
-    private int order;
+    // Relations
+
+    @ManyToOne
+    private Movie movie;
 }

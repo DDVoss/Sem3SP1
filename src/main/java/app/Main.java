@@ -13,10 +13,14 @@ public class Main {
         MovieService movieService = new MovieService();
 
         MovieDTO output = movieService.getMovieById("134");
+        System.out.println(output);
 
+        /*
         List<MovieDTO> allMovies = movieService.getLatestDanishMovie();
         System.out.println("Fetched: " + allMovies.size());
         allMovies.forEach(m -> System.out.println(m.getCurrentData().getOriginalTitle()));
+
+         */
 
     }
 }
