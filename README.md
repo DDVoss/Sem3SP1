@@ -22,4 +22,6 @@ No matter what your experience level, being an engineer means continuously learn
 
 ## TODO:
 
-Make your streams parallel instead of sequential, when making a multithreaded 
+* Make your streams parallel instead of sequential, when making a multithreaded  
+* How do i add the data from api to database?
+* How do I get actors and directors bound to the movie to the specific movie?

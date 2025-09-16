@@ -11,6 +11,9 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
+@Entity
+@Table(name = "movies")
 
 public class Movie {
 
@@ -27,9 +30,9 @@ public class Movie {
 
     private String homepage;
 
+    @Column(name = "origin_country")
+    private String originCountry;
 
-    @Column(name = "country")
-    private List<String> originCountry;
 
     @Column(name = "original_language")
     private String originalLanguage;
@@ -70,3 +73,4 @@ public class Movie {
     private Set<Genre> genresList  = new HashSet<>();
 
 }
+
