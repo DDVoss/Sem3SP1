@@ -35,4 +35,8 @@ public class Crew {
 
     private String department;
     private String job;
+
+    // Relations
+    @ManyToOne
+    private Movie movie;
 }
