@@ -1,5 +1,6 @@
 package app.utils;
 
+import app.dto.GenreResponseDTO;
 import app.dto.SearchResultDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -40,7 +41,9 @@ public class FetchTools {
         return null;
     }
 
-    public <T> List<T> getFromApiList(String uri, Class<T> dtoClass)  {
+
+
+    public <T> List<T> getFromApiListWithPages(String uri, Class<T> dtoClass)  {
         List<T> allResults = new ArrayList<>();
 
 

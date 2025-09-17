@@ -6,16 +6,13 @@ import app.entities.Genre;
 import app.entities.Movie;
 
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 import java.util.stream.Collectors;
 
 public class Converter {
 
-    private final Map<Integer, Genre> genreCache = new ConcurrentHashMap<>();
 
-    public Movie convertFromMovie(MovieDTO movieDTO) {
-       Movie movie = Movie.builder()
+    public Movie movieDtoToEntity(MovieDTO movieDTO, Map<Integer, Genre> genreMap) {
+        Movie movie = Movie.builder()
                 .id(movieDTO.getId())
                 .title(movieDTO.getTitle())
                 .originalTitle(movieDTO.getOriginalTitle())
@@ -25,21 +22,32 @@ public class Converter {
                 .runtime(movieDTO.getRuntime())
                 .build();
 
-        Set<Genre> genreEntities = new HashSet<>();
         if (movieDTO.getGenres() != null)   {
-            for (GenreDTO dto : movieDTO.getGenres())   {
-                Genre genre = genreCache.computeIfAbsent(dto.getId(), id -> new Genre(dto.getId(), dto.getName(), new HashSet<>()));
-                genreEntities.add(genre);
-                genre.getMovies().add(movie);
+            for (GenreDTO gDto : movieDTO.getGenres())  {
+                Genre genre = genreMap.get(gDto.getId());
+                if (genre != null)  {
+                    movie.addGenre(genre);
+                }
             }
         }
-        movie.setGenresList(genreEntities);
         return movie;
     }
 
-    public List<Movie> convertFromMovies(List<MovieDTO> movieDTOs) {
+    public List<Movie> movieCollectList(List<MovieDTO> movieDTOs, Map<Integer, Genre> genreMap) {
         return movieDTOs.stream()
-                .map(this::convertFromMovie)
+                .map(dto -> movieDtoToEntity(dto, genreMap))
+                .collect(Collectors.toList());
+    }
+
+    public Genre genreDtoToEntity(GenreDTO genreDTO)    {
+        return Genre.builder()
+                .id(genreDTO.getId())
+                .name(genreDTO.getName())
+                .build();
+    }
+    public List<Genre> genreCollectList(List<GenreDTO> genreDTOS) {
+        return genreDTOS.stream()
+                .map(this::genreDtoToEntity)
                 .collect(Collectors.toList());
     }
 

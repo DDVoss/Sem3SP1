@@ -52,9 +52,16 @@ public class Movie {
     private Set<Crew> crewList  = new HashSet<>();
 
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JoinTable(name = "movie_genres", joinColumns = @JoinColumn(name = "movie_id"), inverseJoinColumns = @JoinColumn(name = "genre_id")
+    @JoinTable(name = "movie_genres",
+            joinColumns = @JoinColumn(name = "movie_id"),
+            inverseJoinColumns = @JoinColumn(name = "genre_id")
     )
     private Set<Genre> genresList = new HashSet<>();
+
+    public void addGenre(Genre genre)   {
+        this.genresList.add(genre);
+        genre.getMovies().add(this);
+    }
 
 }
 

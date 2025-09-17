@@ -20,7 +20,7 @@ public class MovieDAO implements IDAO<Movie, Integer> {
     public Movie create(Movie movie) {
         try (EntityManager em = emf.createEntityManager())  {
             em.getTransaction().begin();
-            em.persist(movie);
+            em.merge(movie);
             em.getTransaction().commit();
             return movie;
         } catch (Exception e)   {
