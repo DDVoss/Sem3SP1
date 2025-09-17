@@ -1,12 +1,12 @@
 package app.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -22,7 +22,8 @@ public class Genre {
     private String name;
 
     // Relations
-    @ManyToOne
-    private Movie movie;
+
+    @ManyToMany(mappedBy = "genresList")
+    private Set<Movie> movies = new HashSet<>();
 
 }
