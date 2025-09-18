@@ -9,7 +9,9 @@ import app.utils.Converter;
 import app.utils.FetchTools;
 
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class MovieService {
 
@@ -59,4 +61,5 @@ public class MovieService {
             throw new RuntimeException(e);
         }
     }
+
 }

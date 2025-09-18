@@ -1,10 +1,7 @@
 package app.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -14,6 +11,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(name = "genres")
 
 public class Genre {
 
@@ -25,12 +23,11 @@ public class Genre {
 
     // Relations
 
-    @ManyToMany(mappedBy = "genresList")
+
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @ManyToMany(mappedBy = "genres", fetch = FetchType.LAZY)
     private Set<Movie> movies = new HashSet<>();
 
-    public void addMovie(Movie movie)   {
-        this.movies.add(movie);
-        movie.getGenresList().add(this);
-    }
 
 }

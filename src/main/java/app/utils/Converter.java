@@ -22,9 +22,9 @@ public class Converter {
                 .runtime(movieDTO.getRuntime())
                 .build();
 
-        if (movieDTO.getGenres() != null)   {
-            for (GenreDTO gDto : movieDTO.getGenres())  {
-                Genre genre = genreMap.get(gDto.getId());
+        if (movieDTO.getGenreIds() != null)   {
+            for (Integer gDto : movieDTO.getGenreIds())  {
+                Genre genre = genreMap.get(gDto);
                 if (genre != null)  {
                     movie.addGenre(genre);
                 }

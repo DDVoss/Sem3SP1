@@ -51,16 +51,22 @@ public class Movie {
     @EqualsAndHashCode.Exclude
     private Set<Crew> crewList  = new HashSet<>();
 
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JoinTable(name = "movie_genres",
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "movie_genres",
             joinColumns = @JoinColumn(name = "movie_id"),
             inverseJoinColumns = @JoinColumn(name = "genre_id")
     )
-    private Set<Genre> genresList = new HashSet<>();
+    @Builder.Default
+    private Set<Genre> genres = new HashSet<>();
 
-    public void addGenre(Genre genre)   {
-        this.genresList.add(genre);
-        genre.getMovies().add(this);
+    // constructors, getters, setters...
+
+    public void addGenre(Genre genre) {
+        this.genres.add(genre);
+        if (genre != null)  {
+            genre.getMovies().add(this);
+        }
     }
 
 }

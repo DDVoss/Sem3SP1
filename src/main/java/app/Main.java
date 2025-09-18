@@ -12,6 +12,7 @@ import app.utils.Converter;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -28,15 +29,24 @@ public class Main {
         System.out.println("Ready, set, GO! ===>");
 
 
+
+
+
         List<Genre> allGenres = movieService.getAllGenre();
         allGenres.forEach(genreDAO::create);
+
 
         Map<Integer, Genre> genreMap = allGenres.stream()
                 .collect(Collectors.toMap(Genre::getId, g -> g));
 
+
         List<MovieDTO> movieDTOs = movieService.getLatestDanishMovieDTOs();
         List<Movie> allMovies = new Converter().movieCollectList(movieDTOs, genreMap);
+
+
+
         allMovies.forEach(movieDAO::create);
+
 
 
         //allMovies.forEach(m -> System.out.println(m.getOriginalTitle()));
