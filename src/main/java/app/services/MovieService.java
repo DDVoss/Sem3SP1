@@ -13,7 +13,6 @@ import java.util.List;
 
 public class MovieService {
 
-
     String apiKey = System.getenv("API_KEY");
     FetchTools apiReader = new FetchTools();
     Converter converter = new Converter();
