@@ -19,6 +19,9 @@ public class MovieDTO {
 
     private String title;
 
+    @JsonProperty("genre_ids")
+    private List<Integer> genreIds;
+
     @JsonProperty("original_title")
     private String originalTitle;
 
@@ -33,7 +36,6 @@ public class MovieDTO {
     @JsonProperty("release_date")
     private String releaseDate;
 
-    private List<GenreDTO> genres;
     private int runtime;
 
 

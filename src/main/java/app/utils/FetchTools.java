@@ -1,5 +1,6 @@
 package app.utils;
 
+import app.dto.GenreResponseDTO;
 import app.dto.SearchResultDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -13,44 +14,6 @@ import java.util.List;
 public class FetchTools {
 
     ObjectMapper objectMapper = new ObjectMapper();
-
-    /*
-    public static ActivityDTO buildActivity(
-            String cityName,
-            ActivityType activityType,
-            double distance, double duration,
-            LocalTime timeOfDay,
-            String comment,
-            ExecutorService executor
-    ) throws ExecutionException, InterruptedException {
-
-
-        Future<WeatherInfoDTO> weatherInfoFuture;
-        Future<CityInfoDTO> cityInfoFuture;
-
-        weatherInfoFuture = executor.submit(() -> WeatherService.fetchWeatherDataByLocationName(cityName));
-        cityInfoFuture = executor.submit(() -> CityService.getCityInfo(cityName));
-
-        CityInfoDTO cityInfo = cityInfoFuture.get();
-        WeatherInfoDTO weatherInfo = weatherInfoFuture.get();
-
-        ActivityDTO activityDTO = ActivityDTO
-                .builder()
-                .exerciseType(activityType)
-                .cityInfo(cityInfo)
-                .distance(distance)
-                .exerciseDate(LocalDate.now())
-                .duration(duration)
-                .timeOfDay(timeOfDay)
-                .comment(comment)
-                .weatherInfo(weatherInfo)
-                .build();
-
-
-        return activityDTO;
-    }
-
-     */
 
     public <T> T getFromApi(String uri, Class<T> dtoClass)  {
 
@@ -78,7 +41,9 @@ public class FetchTools {
         return null;
     }
 
-    public <T> List<T> getFromApiList(String uri, Class<T> dtoClass)  {
+
+
+    public <T> List<T> getFromApiListWithPages(String uri, Class<T> dtoClass)  {
         List<T> allResults = new ArrayList<>();
 
 

@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Builder
@@ -21,38 +20,23 @@ public class Movie {
     @Column(name = "tmdb_id")
     private int id;
 
-    @Column(name = "imdb_id")
-    private String imdbId;
-
-    private boolean adult;
-
-    private String genres;
-
-    private String homepage;
-
-    @Column(name = "origin_country")
-    private String originCountry;
-
-
-    @Column(name = "original_language")
-    private String originalLanguage;
+    private String title;
 
     @Column(name = "original_title")
     private String originalTitle;
 
-    @Column(columnDefinition = "TEXT") //TODO se om TEXT er nødvendig
-    private String overview;
+    @Column(name = "origin_country")
+    private String originCountry;
+
+    @Column(name = "original_language")
+    private String originalLanguage;
 
     private double popularity;
 
     @Column(name = "release_date")
     private String releaseDate;
 
-    private int revenue;
     private int runtime;
-    private String status;
-    private String tagline;
-    private String title;
 
 
     // Relations
@@ -60,17 +44,30 @@ public class Movie {
     @OneToMany(mappedBy = "movie", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
     @Builder.Default
     @EqualsAndHashCode.Exclude
-    private Set<Cast> castList  = new HashSet<>();
+    private Set<MovieCast> movieCastList = new HashSet<>();
 
     @OneToMany(mappedBy = "movie", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
     @Builder.Default
     @EqualsAndHashCode.Exclude
     private Set<Crew> crewList  = new HashSet<>();
 
-    @OneToMany(mappedBy = "movie", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "movie_genres",
+            joinColumns = @JoinColumn(name = "movie_id"),
+            inverseJoinColumns = @JoinColumn(name = "genre_id")
+    )
     @Builder.Default
-    @EqualsAndHashCode.Exclude
-    private Set<Genre> genresList  = new HashSet<>();
+    private Set<Genre> genres = new HashSet<>();
+
+    // constructors, getters, setters...
+
+    public void addGenre(Genre genre) {
+        this.genres.add(genre);
+        if (genre != null)  {
+            genre.getMovies().add(this);
+        }
+    }
 
 }
 

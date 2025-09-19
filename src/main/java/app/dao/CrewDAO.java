@@ -1,6 +1,5 @@
 package app.dao;
 
-import app.entities.Cast;
 import app.entities.Crew;
 import app.utils.IDAO;
 import jakarta.persistence.EntityManager;

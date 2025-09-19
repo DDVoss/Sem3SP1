@@ -1,10 +1,7 @@
 package app.entities;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,11 +11,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 
-public class Cast {
+public class MovieCast {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    int id;
+
     @Column(name = "cast_id")
-    private int id;
+    private int castId;
 
     private boolean adult;
     private int gender;
@@ -36,8 +36,6 @@ public class Cast {
     @Column(name = "profile_path")
     private String profilePath;
 
-    @Column(name = "cast_id")
-    private int castId;
 
     private String character;
 

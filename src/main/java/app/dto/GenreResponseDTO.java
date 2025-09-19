@@ -1,19 +1,18 @@
 package app.dto;
 
+import app.entities.Genre;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @JsonIgnoreProperties(ignoreUnknown = true)
 
-public class GenreDTO {
-    private int id;
-    private String name;
-
+public class GenreResponseDTO {
+    private List<Genre> genres;
 }

@@ -1,21 +1,23 @@
 package app.services;
 
+import app.dto.GenreDTO;
+import app.dto.GenreResponseDTO;
 import app.dto.MovieDTO;
-import app.exceptions.ApiException;
+import app.entities.Genre;
+import app.entities.Movie;
+import app.utils.Converter;
 import app.utils.FetchTools;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class MovieService {
-    //TODO URI for getting the latest danish film from 2018-09-15 to 2025-09-15
-//          curl --request GET \
-//          --url 'https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&page=1&primary_release_date.gte=2018-09-15&primary_release_date.lte=2025-09-15&region=dk&sort_by=primary_release_date.desc&with_original_language=da' \
-//          --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhZDhlZWY5NThmOTQxZjc5NzIwN2FjN2M3Nzg4ZGM4OCIsIm5iZiI6MTc1NzQ1MDc5Ni4zOTgwMDAyLCJzdWIiOiI2OGMwOTIyYzc2MThiZDM1YzExYmQ0MjIiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.5M6yN-ZGmZoh_UwAmTVaoausax2NWqk5RrU2Wdlw_eE' \
-//          --header 'accept: application/json'
 
     String apiKey = System.getenv("API_KEY");
     FetchTools apiReader = new FetchTools();
+    Converter converter = new Converter();
 
     public MovieDTO getMovieById(String id) {
 
@@ -30,16 +32,34 @@ public class MovieService {
         }
     }
 
-    public List<MovieDTO> getLatestDanishMovie()   {
-
-        String movieURL = "https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&page=1&primary_release_date.gte=2018-09-15&primary_release_date.lte=2025-09-15&region=dk&sort_by=primary_release_date.desc&with_original_language=da";
-
-        String url = new String(movieURL + "&api_key=" + apiKey);
+    public List<MovieDTO> getLatestDanishMovieDTOs() {
+        String movieURL = "https://api.themoviedb.org/3/discover/movie"
+                + "?include_adult=false&include_video=false"
+                + "&primary_release_date.gte=2024-09-15"
+                + "&primary_release_date.lte=2025-09-15"
+                + "&region=dk"
+                + "&sort_by=primary_release_date.desc"
+                + "&with_original_language=da"
+                + "&api_key=" + apiKey;
 
         try {
-            return apiReader.getFromApiList(url , MovieDTO.class);
-        } catch (Exception e)    {
-            throw new  RuntimeException(e);
+            return apiReader.getFromApiListWithPages(movieURL, MovieDTO.class);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
+
+    public List<Genre> getAllGenre()    {
+        String genreURL = "https://api.themoviedb.org/3/genre/movie/list?language=en";
+
+        String url = new String(genreURL + "&api_key=" + apiKey);
+
+        try {
+            GenreResponseDTO genreList = apiReader.getFromApi(url, GenreResponseDTO.class);
+            return genreList.getGenres();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

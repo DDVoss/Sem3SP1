@@ -1,7 +1,6 @@
 package app.dao;
 
-import app.entities.Cast;
-import app.entities.Movie;
+import app.entities.MovieCast;
 import app.utils.IDAO;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -9,7 +8,7 @@ import jakarta.persistence.TypedQuery;
 
 import java.util.List;
 
-public class CastDAO implements IDAO<Cast, Integer> {
+public class CastDAO implements IDAO<MovieCast, Integer> {
 
     private final EntityManagerFactory emf;
 
@@ -18,12 +17,12 @@ public class CastDAO implements IDAO<Cast, Integer> {
     }
 
     @Override
-    public Cast create(Cast cast) {
+    public MovieCast create(MovieCast movieCast) {
         try (EntityManager em = emf.createEntityManager())  {
             em.getTransaction().begin();
-            em.persist(cast);
+            em.persist(movieCast);
             em.getTransaction().commit();
-            return cast;
+            return movieCast;
         } catch (Exception e)   {
             e.getMessage();
             return null;
@@ -31,9 +30,9 @@ public class CastDAO implements IDAO<Cast, Integer> {
     }
 
     @Override
-    public List<Cast> getAll() {
+    public List<MovieCast> getAll() {
         try (EntityManager em = emf.createEntityManager())  {
-            TypedQuery<Cast> query = em.createQuery("SELECT c FROM Cast c", Cast.class);
+            TypedQuery<MovieCast> query = em.createQuery("SELECT c FROM MovieCast c", MovieCast.class);
             return query.getResultList();
         } catch (Exception e)   {
             e.getMessage();
@@ -42,10 +41,10 @@ public class CastDAO implements IDAO<Cast, Integer> {
     }
 
     @Override
-    public Cast getById(Integer id) {
+    public MovieCast getById(Integer id) {
         try (EntityManager em = emf.createEntityManager())  {
-            Cast cast = em.find(Cast.class, id);
-            return cast;
+            MovieCast movieCast = em.find(MovieCast.class, id);
+            return movieCast;
         } catch (Exception e) {
             e.getMessage();
             return null;
@@ -53,13 +52,13 @@ public class CastDAO implements IDAO<Cast, Integer> {
     }
 
     @Override
-    public Cast update(Cast cast) {
+    public MovieCast update(MovieCast movieCast) {
         try(EntityManager em = emf.createEntityManager())   {
             em.getTransaction().begin();
-            Cast updateCast = em.merge(cast);
+            MovieCast updateMovieCast = em.merge(movieCast);
             em.getTransaction().commit();
             em.close();
-            return updateCast;
+            return updateMovieCast;
         } catch (Exception e) {
             e.getMessage();
             return null;
@@ -70,8 +69,8 @@ public class CastDAO implements IDAO<Cast, Integer> {
     public boolean delete(Integer id) {
         try(EntityManager em = emf.createEntityManager()) {
             em.getTransaction().begin();
-            Cast removeCast = getById(id);
-            em.remove(removeCast);
+            MovieCast removeMovieCast = getById(id);
+            em.remove(removeMovieCast);
             em.getTransaction().commit();
             return true;
         } catch (Exception e) {

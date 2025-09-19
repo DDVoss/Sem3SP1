@@ -1,17 +1,17 @@
 package app.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(name = "genres")
 
 public class Genre {
 
@@ -22,7 +22,12 @@ public class Genre {
     private String name;
 
     // Relations
-    @ManyToOne
-    private Movie movie;
+
+
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @ManyToMany(mappedBy = "genres", fetch = FetchType.LAZY)
+    private Set<Movie> movies = new HashSet<>();
+
 
 }
