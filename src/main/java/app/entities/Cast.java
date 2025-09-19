@@ -3,6 +3,7 @@ package app.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,16 +11,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(name = "casts")
+@Builder
 
-public class MovieCast {
+public class Cast {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
-
-    @Column(name = "cast_id")
-    private int castId;
-
+    private int id;
     private boolean adult;
     private int gender;
 
@@ -36,12 +34,18 @@ public class MovieCast {
     @Column(name = "profile_path")
     private String profilePath;
 
+    @Column(name = "cast_id")
+    private int castId;
 
     private String character;
+
+    @Column(name = "credit_id")
+    private String creditId;
+
+    @Column(name = "cast_order")
+    private int order;
 
 
     // Relations
 
-    @ManyToOne
-    private Movie movie;
 }

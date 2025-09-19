@@ -41,15 +41,6 @@ public class Movie {
 
     // Relations
 
-    @OneToMany(mappedBy = "movie", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
-    @Builder.Default
-    @EqualsAndHashCode.Exclude
-    private Set<MovieCast> movieCastList = new HashSet<>();
-
-    @OneToMany(mappedBy = "movie", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
-    @Builder.Default
-    @EqualsAndHashCode.Exclude
-    private Set<Crew> crewList  = new HashSet<>();
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinTable(

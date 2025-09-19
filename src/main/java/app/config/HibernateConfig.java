@@ -1,7 +1,6 @@
 package app.config;
 
-import app.entities.MovieCast;
-import app.entities.Crew;
+import app.entities.Cast;
 import app.entities.Genre;
 import app.entities.Movie;
 import app.utils.Utils;
@@ -44,8 +43,7 @@ public class HibernateConfig {
     // TODO: IMPORTANT: Add Entity classes here for them to be registered with Hibernate
     private static void getAnnotationConfiguration(Configuration configuration) {
         configuration.addAnnotatedClass(Movie.class);
-        configuration.addAnnotatedClass(MovieCast.class);
-        configuration.addAnnotatedClass(Crew.class);
+        configuration.addAnnotatedClass(Cast.class);
         configuration.addAnnotatedClass(Genre.class);
     }
 

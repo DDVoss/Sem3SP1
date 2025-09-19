@@ -1,23 +1,23 @@
 package app.services;
 
-import app.dto.GenreDTO;
+import app.dto.CastDTO;
+import app.dto.CreditResponseDTO;
 import app.dto.GenreResponseDTO;
 import app.dto.MovieDTO;
+import app.entities.Cast;
 import app.entities.Genre;
-import app.entities.Movie;
-import app.utils.Converter;
+
 import app.utils.FetchTools;
 
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+
 
 public class MovieService {
 
     String apiKey = System.getenv("API_KEY");
     FetchTools apiReader = new FetchTools();
-    Converter converter = new Converter();
+
 
     public MovieDTO getMovieById(String id) {
 
@@ -57,6 +57,19 @@ public class MovieService {
         try {
             GenreResponseDTO genreList = apiReader.getFromApi(url, GenreResponseDTO.class);
             return genreList.getGenres();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<CastDTO> getAllCreditsByMovieId(String movieId)    {
+        String creditURL = "https://api.themoviedb.org/3/movie/" + movieId + "/credits"
+                + "?api_key=" + apiKey
+                + "&language=da";
+
+        try {
+            CreditResponseDTO creditList = apiReader.getFromApi(creditURL, CreditResponseDTO.class);
+            return creditList.getCast();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

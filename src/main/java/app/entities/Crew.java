@@ -1,24 +1,21 @@
 package app.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 
 public class Crew {
-
-    @Id
-    @Column(name = "crew_id")
     private int id;
-
     private boolean adult;
     private int gender;
 
@@ -35,10 +32,9 @@ public class Crew {
     @Column(name = "profile_path")
     private String profilePath;
 
+    @Column(name = "credit_id")
+    private String creditId;
+
     private String department;
     private String job;
-
-    // Relations
-    @ManyToOne
-    private Movie movie;
 }

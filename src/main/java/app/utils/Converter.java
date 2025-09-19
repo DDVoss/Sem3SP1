@@ -1,7 +1,9 @@
 package app.utils;
 
+import app.dto.CastDTO;
 import app.dto.GenreDTO;
 import app.dto.MovieDTO;
+import app.entities.Cast;
 import app.entities.Genre;
 import app.entities.Movie;
 
@@ -52,6 +54,28 @@ public class Converter {
     }
 
 
+    public Cast creditDtoToEntity(CastDTO castDTO) {
+        Cast cast = Cast.builder()
 
+                .id(castDTO.getId())
+                .adult(castDTO.isAdult())
+                .gender(castDTO.getGender())
+                .knownForDepartment(castDTO.getKnownForDepartment())
+                .name(castDTO.getName())
+                .originalName(castDTO.getOriginalName())
+                .popularity(castDTO.getPopularity())
+                .profilePath(castDTO.getProfilePath())
+                .castId(castDTO.getCastId())
+                .character(castDTO.getCharacter())
+                .creditId(castDTO.getCreditId())
+                .order(castDTO.getOrder())
+                .build();
+        return cast;
+    }
 
+    public List<Cast> creditDtoToEntity(List<CastDTO> castDTOs) {
+        return castDTOs.stream()
+                .map(this::creditDtoToEntity)
+                .collect(Collectors.toList());
+    }
 }
