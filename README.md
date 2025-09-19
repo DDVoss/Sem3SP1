@@ -1,27 +1,27 @@
-# My Awesome Project
-Write a short sentence or two about this project and what it does. Be sure to include a link and a screenshot (we're front end devs so we can actually see our work!).
+# TMDB Fetcher
+A Java application that fetches data from an external API, processes it, and stores it in a PostgreSQL database. The project uses TMDB API to fetch data about Danish movies and stores it in a local database. the url is easy to change in the code.
 
 **Link to project:** http://recruiters-love-seeing-live-demos.com/
 
 
 ## How It's Made:
 
-**Tech used:** HTML, CSS, JavaScript, Framework of choice
+**Tech used:** Java, Jackson, PostgreSQL, Spring Boot, Maven, JUnit, Lombok
 
-Here's where you can go to town on how you actually built this thing. Write as much as you can here, it's totally fine if it's not too much just make sure you write *something*. If you don't have too much experience on your resume working on the front end that's totally fine. This is where you can really show off your passion and make up for that ten fold.
+A small 4 day project to practice using Java to build a backend service that fetches data from an external API, processes it, and stores it in a database. The project uses Spring Boot for the application framework, Jackson for JSON parsing, PostgreSQL for the database, and JUnit for testing.
 
 ## Optimizations
-*(optional)*
 
-You don't have to include this section but interviewers *love* that you can not only deliver a final product that looks great but also functions efficiently. Did you write something then refactor it later and the result was 5x faster than the original implementation? Did you cache your assets? Things that you write in this section are **GREAT** to bring up in interviews and you can use this section as reference when studying for technical interviews!
+The project was intended for group work, that means that the codebase was long from finished. Here are some optimizations that I would make if I had more time: implement cast of actors and directors which are bound to the danish movies. add Junit tests for the DAO layer and maybe some service methods. At the moment the codebase has problems populating  the database many-to-many relations in the table movie_genres. Using Multithreading to speed up the fetching of data from the external API.
 
 ## Lessons Learned:
 
-No matter what your experience level, being an engineer means continuously learning. Every time you build something you always have those *whoa this is awesome* or *wow I actually did it!* moments. This is where you should share those moments! Recruiters and interviewers love to see that you're self-aware and passionate about growing.
+Most of the project was easy to set up and implement, but the many-to-many relations in the database was tricky and the majority of the time was spent on that single problem which i have not yet solved.
 
 
-## TODO:
+## How to run it:
+1. Clone the repo
+2. Make sure you have Java and Maven installed
+3. Set up a PostgresSQL database and update the config.properties file with your database credentials, the file is located in src/main/resources
+4. If you are using IntelliJ or another IDE that can store your environment variables, set the following environment variable "API_KEY" with your API key from https://www.themoviedb.org/settings/api
 
-* Make your streams parallel instead of sequential, when making a multithreaded  
-* How do i add the data from api to database?
-* How do I get actors and directors bound to the movie to the specific movie?
