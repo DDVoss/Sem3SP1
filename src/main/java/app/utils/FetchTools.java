@@ -15,6 +15,7 @@ public class FetchTools {
 
     ObjectMapper objectMapper = new ObjectMapper();
 
+    // Generic method to fetch data from an API and map it to a specified DTO class
     public <T> T getFromApi(String uri, Class<T> dtoClass)  {
 
         try {
@@ -30,6 +31,7 @@ public class FetchTools {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
             if (response.statusCode() == 200)   {
+                // Map the JSON response to the specified DTO class
                 return objectMapper.readValue(response.body(), dtoClass);
             } else {
                 System.out.println("GET request failed. Status code: " + response.statusCode());
@@ -43,6 +45,7 @@ public class FetchTools {
 
 
 
+    // Method to handle paginated API responses and aggregate results into a list of specified DTO class
     public <T> List<T> getFromApiListWithPages(String uri, Class<T> dtoClass)  {
         List<T> allResults = new ArrayList<>();
 
@@ -50,6 +53,7 @@ public class FetchTools {
         try {
             HttpClient client = HttpClient.newHttpClient();
 
+            // Start with the first page
             int page = 1;
             int totalPages;
             
@@ -67,6 +71,7 @@ public class FetchTools {
 
                 if (response.statusCode() == 200) {
                     String json = response.body();
+                    // Generics are erased so we use TypeFactory.constructParametricType to specify which generic type we want for SearchResultDTO
                     SearchResultDTO<T> searchResult = objectMapper.readValue(
                             json,
                             objectMapper.getTypeFactory()
@@ -81,6 +86,7 @@ public class FetchTools {
                     System.out.println("GET request failed. Status code: " + response.statusCode());
                     break;
                 }
+                // Continue until all pages are fetched
             } while (page <= totalPages);
 
         } catch (Exception e){

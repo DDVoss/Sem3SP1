@@ -19,6 +19,7 @@ public class MovieService {
     FetchTools apiReader = new FetchTools();
     Converter converter = new Converter();
 
+    // Get movie by ID. Not necessarily used, but was a gateway to understand how the API works
     public MovieDTO getMovieById(String id) {
 
         String movieURL = "https://api.themoviedb.org/3/movie/";
@@ -32,6 +33,7 @@ public class MovieService {
         }
     }
 
+    // Get latest Danish movies released between 2024-09-15 and 2025-09-15
     public List<MovieDTO> getLatestDanishMovieDTOs() {
         String movieURL = "https://api.themoviedb.org/3/discover/movie"
                 + "?include_adult=false&include_video=false"
@@ -43,6 +45,7 @@ public class MovieService {
                 + "&api_key=" + apiKey;
 
         try {
+            // Using a utility method to handle pagination and fetch all pages of results. The API uses pagination for large result sets.
             return apiReader.getFromApiListWithPages(movieURL, MovieDTO.class);
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -50,12 +53,11 @@ public class MovieService {
     }
 
     public List<Genre> getAllGenre()    {
-        String genreURL = "https://api.themoviedb.org/3/genre/movie/list?language=en";
-
-        String url = new String(genreURL + "&api_key=" + apiKey);
+        String genreURL = "https://api.themoviedb.org/3/genre/movie/list?language=en" + "&api_key=" + apiKey;
 
         try {
-            GenreResponseDTO genreList = apiReader.getFromApi(url, GenreResponseDTO.class);
+            // Fetch the genre list from the API
+            GenreResponseDTO genreList = apiReader.getFromApi(genreURL, GenreResponseDTO.class);
             return genreList.getGenres();
         } catch (Exception e) {
             throw new RuntimeException(e);

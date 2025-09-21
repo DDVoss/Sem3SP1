@@ -31,20 +31,20 @@ public class Main {
 
 
 
-
+        // Call the API to get all genres and save them to the database
         List<Genre> allGenres = movieService.getAllGenre();
         allGenres.forEach(genreDAO::create);
 
-
+        // Create a map of genre id to genre object for easy lookup. It helps to link genres to movies later and is faster than searching the database each time.
         Map<Integer, Genre> genreMap = allGenres.stream()
                 .collect(Collectors.toMap(Genre::getId, g -> g));
 
-
+        // Call the API to get the latest Danish movies and convert them to Movie entities
         List<MovieDTO> movieDTOs = movieService.getLatestDanishMovieDTOs();
         List<Movie> allMovies = new Converter().movieCollectList(movieDTOs, genreMap);
 
 
-
+        // Persist all movies to the database
         allMovies.forEach(movieDAO::create);
 
 
